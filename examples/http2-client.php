@@ -5,7 +5,6 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use React\EventLoop\Loop;
-use React\Socket\Connection;
 use React\Socket\ConnectionInterface;
 use React\Socket\Connector;
 use Varion\Nghttp2\Events\DataReceived;
@@ -70,12 +69,6 @@ $connector->connect("tls://{$host}:{$port}")->then(
         $fail
     ): void {
         try {
-            // Verify ALPN after TLS handshake and abort unless HTTP/2 ("h2") was selected.
-            $alpn = getNegotiatedAlpn($connection);
-            if ($alpn !== 'h2') {
-                throw new RuntimeException('ALPN negotiation failed (h2 not selected)');
-            }
-
             // Send the client preface and initial SETTINGS.
             flushSessionOutput($session, $connection);
 
@@ -167,28 +160,6 @@ function flushSessionOutput(Session $session, ConnectionInterface $connection): 
     foreach ($session->drainOutput() as $chunk) {
         $connection->write($chunk);
     }
-}
-
-function getNegotiatedAlpn(ConnectionInterface $connection): ?string
-{
-    // Access the internal stream resource to read negotiated TLS metadata.
-    if (!$connection instanceof Connection || !is_resource($connection->stream)) {
-        return null;
-    }
-
-    $meta = stream_get_meta_data($connection->stream);
-    if (!isset($meta['crypto']) || !is_array($meta['crypto'])) {
-        return null;
-    }
-
-    foreach (['alpn_protocol', 'alpn_selected', 'ssl_alpn_protocol', 'negotiated_protocol'] as $key) {
-        $value = $meta['crypto'][$key] ?? null;
-        if (is_string($value) && $value !== '') {
-            return $value;
-        }
-    }
-
-    return null;
 }
 
 function consumeResponseEvents(
