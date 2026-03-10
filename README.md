@@ -62,6 +62,15 @@ NGHTTP2_EXT_PATH=/absolute/path/to/ext-nghttp2/modules/nghttp2.so ./bin/client
 
 ### 3. Install Composer dependencies
 
+Clone this repository first:
+
+```bash
+git clone https://github.com/masakielastic/reactphp-nghttp2-examples.git
+cd reactphp-nghttp2-examples
+```
+
+Then install dependencies:
+
 ```bash
 composer install
 ```
