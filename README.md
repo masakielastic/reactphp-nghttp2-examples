@@ -17,7 +17,9 @@ This example can serve as a starting point for developers who want to:
 
 ## Quick Start
 
-Build `nghttp2.so` (from <https://github.com/varionlabs/ext-nghttp2>):
+### 1. Build `nghttp2.so`
+
+Build from source (<https://github.com/varionlabs/ext-nghttp2>):
 
 ```bash
 git clone https://github.com/varionlabs/ext-nghttp2.git
@@ -29,13 +31,29 @@ php -d extension=$(pwd)/modules/nghttp2.so -m | grep nghttp2
 cd ..
 ```
 
-Install PHP dependencies:
+### 2. Set `NGHTTP2_EXT_PATH`
+
+Point `NGHTTP2_EXT_PATH` to the built module path so wrapper scripts can pass `-d extension=...` to PHP:
+
+```bash
+export NGHTTP2_EXT_PATH=/absolute/path/to/ext-nghttp2/modules/nghttp2.so
+```
+
+You can also set it only for one command:
+
+```bash
+NGHTTP2_EXT_PATH=/absolute/path/to/ext-nghttp2/modules/nghttp2.so ./bin/client
+```
+
+### 3. Install Composer dependencies
 
 ```bash
 composer install
 ```
 
-Run the demo client:
+### 4. Run `/bin/client`
+
+Default request:
 
 ```bash
 ./bin/client
@@ -47,23 +65,12 @@ Custom target:
 ./bin/client nghttp2.org 443 /httpbin/get
 ```
 
-Run local demo server:
+### 5. Run `bin/server`
+
+Start the local demo server:
 
 ```bash
 ./bin/server
-```
-
-If the nghttp2 extension is not preloaded in your PHP environment, load it explicitly:
-
-```bash
-php -d extension=nghttp2.so examples/http2-client.php
-```
-
-Or run wrapper scripts with `NGHTTP2_EXT_PATH`:
-
-```bash
-NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/client
-NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/server
 ```
 
 ---
