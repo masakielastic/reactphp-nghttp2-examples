@@ -2,26 +2,32 @@
 
 Minimal HTTP/2 client and server examples using **ReactPHP sockets** and a **native nghttp2-based PHP extension**.
 
-This repository demonstrates how a native HTTP/2 protocol engine can be combined with the asynchronous I/O model provided by ReactPHP.
+This repository focuses on one practical goal: making it easy to try HTTP/2 over ReactPHP with as little setup as possible.
 
-The examples intentionally keep the code simple and avoid introducing additional abstractions.  
-Instead, they show the **minimal wiring required** to connect the following layers:
+The examples intentionally keep the integration simple and explicit.
 
-- **ReactPHP** – event loop and socket transport
-- **nghttp2 PHP extension** – HTTP/2 protocol state machine
-- **userland code** – integration between the two
+- **ReactPHP** provides asynchronous socket I/O
+- the **nghttp2 PHP extension** provides the HTTP/2 protocol engine
+- **userland code** wires the two together
 
-In this design:
+This repository does not try to define a full architecture for HTTP/2 in PHP.
 
-ReactPHP is responsible for network I/O and connection lifecycle.  
-The nghttp2 extension is responsible for HTTP/2 protocol logic such as frame parsing, stream state management, and protocol events.  
-Userland code connects the two by forwarding incoming bytes to the HTTP/2 session and sending outbound frames back to the socket.
+Instead, it shows the minimal pieces required to make the integration work today, and documents some of the boilerplate and open questions that appear when wiring ReactPHP directly to a low-level HTTP/2 session.
 
-The goal of this repository is **not to provide a complete HTTP/2 client or server library**.
+These examples may be useful if you want to:
 
-Instead, it serves as a **minimal integration example** showing how a protocol engine like nghttp2 can be used together with ReactPHP.
+- quickly try HTTP/2 over ReactPHP
+- study how a native protocol engine can be connected to async PHP I/O
+- experiment with your own HTTP/2 library design
+- understand the current friction points in this integration style
 
-Developers interested in building their own HTTP/2 libraries or experimenting with HTTP/2 protocol behavior may find these examples useful as a starting point.
+Some of the current issues are not specific to this repository, but come from the surrounding APIs and layering, such as:
+
+- repetitive wiring between socket events and the HTTP/2 session
+- access to TLS / ALPN negotiation details
+- questions around HTTP/1.1 Upgrade and h2c handling when the protocol engine itself is HTTP/2-only
+
+The goal of this repository is to provide a small, runnable starting point first, and to make these integration issues easier to discuss with concrete code.
 
 ---
 
