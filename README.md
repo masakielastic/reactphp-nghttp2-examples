@@ -15,6 +15,42 @@ This example can serve as a starting point for developers who want to:
 
 ---
 
+## Quick Start
+
+Try the demo immediately:
+
+```bash
+composer install
+./bin/client
+```
+
+Custom target:
+
+```bash
+./bin/client nghttp2.org 443 /httpbin/get
+```
+
+Run local demo server:
+
+```bash
+./bin/server
+```
+
+If the nghttp2 extension is not preloaded in your PHP environment, load it explicitly:
+
+```bash
+php -d extension=nghttp2.so examples/http2-client.php
+```
+
+Or run wrapper scripts with `NGHTTP2_EXT_PATH`:
+
+```bash
+NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/client
+NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/server
+```
+
+---
+
 ## Overview
 
 This example separates responsibilities between two layers.
@@ -167,7 +203,14 @@ composer install
 Make sure the nghttp2 extension is loaded:
 
 ```bash
-php -d extension=nghttp2.so http2-client.php
+php -d extension=nghttp2.so examples/http2-client.php
+```
+
+With wrapper scripts, you can also set `NGHTTP2_EXT_PATH`:
+
+```bash
+NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/client
+NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/server
 ```
 
 ---
@@ -177,19 +220,25 @@ php -d extension=nghttp2.so http2-client.php
 Default request:
 
 ```bash
-php http2-client.php
+./bin/client
 ```
 
 Custom request:
 
 ```bash
-php http2-client.php host port path
+./bin/client host port path
 ```
 
 Example:
 
 ```bash
-php http2-client.php nghttp2.org 443 /httpbin/get
+./bin/client nghttp2.org 443 /httpbin/get
+```
+
+Run demo server:
+
+```bash
+./bin/server
 ```
 
 ---
