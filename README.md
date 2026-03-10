@@ -115,8 +115,8 @@ Start the local demo server:
 
 ---
 
-## 今後の課題
+## Future Work
 
-- `Overview` とアーキテクチャ図の再整理
-- client/server の詳細フロー解説を段階的に追加
-- エラーハンドリングと運用上の注意点の追記
+- Reorganize the `Overview` section and architecture diagram.
+- Add step-by-step client/server flow explanations.
+- Document error-handling guidance and operational caveats.
