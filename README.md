@@ -215,6 +215,37 @@ NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/server
 
 ---
 
+## Build `nghttp2.so` Module
+
+You can build the extension from source published at:
+<https://github.com/varionlabs/ext-nghttp2>
+
+Example build steps:
+
+```bash
+git clone https://github.com/varionlabs/ext-nghttp2.git
+cd ext-nghttp2
+phpize
+./configure --enable-nghttp2
+make -j"$(nproc)"
+```
+
+Load check:
+
+```bash
+php -d extension=$(pwd)/modules/nghttp2.so -m | grep nghttp2
+```
+
+Expected output includes:
+
+```text
+nghttp2
+```
+
+Note: `grep nghttp2no` does not match and returns no output.
+
+---
+
 ## Running the Demo
 
 Default request:
