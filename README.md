@@ -17,6 +17,21 @@ This example can serve as a starting point for developers who want to:
 
 ## Quick Start
 
+Prerequisites:
+
+- PHP 8.2 or later
+- Composer
+- ReactPHP dependencies (installed via `composer install`)
+- nghttp2 PHP extension (`nghttp2.so`)
+
+The extension must provide at least these classes:
+
+- `Varion\\Nghttp2\\Session`
+- `Varion\\Nghttp2\\Events\\HeadersReceived`
+- `Varion\\Nghttp2\\Events\\DataReceived`
+- `Varion\\Nghttp2\\Events\\StreamClosed`
+- `Varion\\Nghttp2\\Events\\StreamReset`
+
 ### 1. Build `nghttp2.so`
 
 Build from source (<https://github.com/varionlabs/ext-nghttp2>):
@@ -197,22 +212,6 @@ In this demo:
 2. nghttp2 PHP extension
 3. ReactPHP
 4. OS / TCP / TLS
-
----
-
-## Requirements
-
-- PHP 8.x
-- ReactPHP
-- nghttp2 PHP extension
-
-The extension must provide the following classes:
-
-- `Varion\\Nghttp2\\Session`
-- `Varion\\Nghttp2\\Events\\HeadersReceived`
-- `Varion\\Nghttp2\\Events\\DataReceived`
-- `Varion\\Nghttp2\\Events\\StreamClosed`
-- `Varion\\Nghttp2\\Events\\StreamReset`
 
 ---
 
