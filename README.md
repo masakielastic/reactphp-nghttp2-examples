@@ -17,10 +17,27 @@ This example can serve as a starting point for developers who want to:
 
 ## Quick Start
 
-Try the demo immediately:
+Build `nghttp2.so` (from <https://github.com/varionlabs/ext-nghttp2>):
+
+```bash
+git clone https://github.com/varionlabs/ext-nghttp2.git
+cd ext-nghttp2
+phpize
+./configure --enable-nghttp2
+make -j"$(nproc)"
+php -d extension=$(pwd)/modules/nghttp2.so -m | grep nghttp2
+cd ..
+```
+
+Install PHP dependencies:
 
 ```bash
 composer install
+```
+
+Run the demo client:
+
+```bash
 ./bin/client
 ```
 
@@ -189,88 +206,6 @@ The extension must provide the following classes:
 - `Varion\\Nghttp2\\Events\\DataReceived`
 - `Varion\\Nghttp2\\Events\\StreamClosed`
 - `Varion\\Nghttp2\\Events\\StreamReset`
-
----
-
-## Installation
-
-Install dependencies using Composer:
-
-```bash
-composer install
-```
-
-Make sure the nghttp2 extension is loaded:
-
-```bash
-php -d extension=nghttp2.so examples/http2-client.php
-```
-
-With wrapper scripts, you can also set `NGHTTP2_EXT_PATH`:
-
-```bash
-NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/client
-NGHTTP2_EXT_PATH=/path/to/nghttp2.so ./bin/server
-```
-
----
-
-## Build `nghttp2.so` Module
-
-You can build the extension from source published at:
-<https://github.com/varionlabs/ext-nghttp2>
-
-Example build steps:
-
-```bash
-git clone https://github.com/varionlabs/ext-nghttp2.git
-cd ext-nghttp2
-phpize
-./configure --enable-nghttp2
-make -j"$(nproc)"
-```
-
-Load check:
-
-```bash
-php -d extension=$(pwd)/modules/nghttp2.so -m | grep nghttp2
-```
-
-Expected output includes:
-
-```text
-nghttp2
-```
-
-Note: `grep nghttp2no` does not match and returns no output.
-
----
-
-## Running the Demo
-
-Default request:
-
-```bash
-./bin/client
-```
-
-Custom request:
-
-```bash
-./bin/client host port path
-```
-
-Example:
-
-```bash
-./bin/client nghttp2.org 443 /httpbin/get
-```
-
-Run demo server:
-
-```bash
-./bin/server
-```
 
 ---
 
