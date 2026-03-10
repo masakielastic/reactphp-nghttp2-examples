@@ -1,10 +1,10 @@
 # ReactPHP + nghttp2 PHP Extension Demo
 
-Minimal HTTP/2 client example using **ReactPHP sockets** and a **custom nghttp2-based PHP extension**.
+Minimal HTTP/2 client and server examples using **ReactPHP sockets** and a **custom nghttp2-based PHP extension**.
 
 This repository demonstrates how to integrate ReactPHP asynchronous socket I/O with an HTTP/2 protocol implementation provided by a PHP extension.
 
-The goal is not to provide a production-ready HTTP/2 client, but to show **the minimal architecture required to run HTTP/2 over ReactPHP**.
+The goal is not to provide production-ready HTTP/2 implementations, but to show **the minimal architecture required to run HTTP/2 clients and servers over ReactPHP**.
 
 This example can serve as a starting point for developers who want to:
 
