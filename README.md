@@ -1,17 +1,27 @@
-# ReactPHP + nghttp2 PHP Extension Demo
+# ReactPHP + nghttp2 PHP Extension Examples
 
-Minimal HTTP/2 client and server examples using **ReactPHP sockets** and a **custom nghttp2-based PHP extension**.
+Minimal HTTP/2 client and server examples using **ReactPHP sockets** and a **native nghttp2-based PHP extension**.
 
-This repository demonstrates how to integrate ReactPHP asynchronous socket I/O with an HTTP/2 protocol implementation provided by a PHP extension.
+This repository demonstrates how a native HTTP/2 protocol engine can be combined with the asynchronous I/O model provided by ReactPHP.
 
-The goal is not to provide production-ready HTTP/2 implementations, but to show **the minimal architecture required to run HTTP/2 clients and servers over ReactPHP**.
+The examples intentionally keep the code simple and avoid introducing additional abstractions.  
+Instead, they show the **minimal wiring required** to connect the following layers:
 
-This example can serve as a starting point for developers who want to:
+- **ReactPHP** – event loop and socket transport
+- **nghttp2 PHP extension** – HTTP/2 protocol state machine
+- **userland code** – integration between the two
 
-- experiment with HTTP/2 in PHP
-- build their own HTTP/2 client libraries
-- understand how protocol state machines interact with event loops
-- integrate nghttp2 with ReactPHP
+In this design:
+
+ReactPHP is responsible for network I/O and connection lifecycle.  
+The nghttp2 extension is responsible for HTTP/2 protocol logic such as frame parsing, stream state management, and protocol events.  
+Userland code connects the two by forwarding incoming bytes to the HTTP/2 session and sending outbound frames back to the socket.
+
+The goal of this repository is **not to provide a complete HTTP/2 client or server library**.
+
+Instead, it serves as a **minimal integration example** showing how a protocol engine like nghttp2 can be used together with ReactPHP.
+
+Developers interested in building their own HTTP/2 libraries or experimenting with HTTP/2 protocol behavior may find these examples useful as a starting point.
 
 ---
 
