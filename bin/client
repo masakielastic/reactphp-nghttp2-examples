@@ -4,4 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-exec php "${PROJECT_ROOT}/examples/http2-client.php" "$@"
+PHP_ARGS=()
+if [[ -n "${NGHTTP2_EXT_PATH:-}" ]]; then
+    PHP_ARGS+=(-d "extension=${NGHTTP2_EXT_PATH}")
+fi
+
+exec php "${PHP_ARGS[@]}" "${PROJECT_ROOT}/examples/http2-client.php" "$@"
